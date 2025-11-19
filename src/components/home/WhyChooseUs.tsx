@@ -1,58 +1,104 @@
 "use client";
-import { Zap, Star, UserCheck, Briefcase, Scale } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { useRouter } from "next/navigation";
+import { Zap, Star, UserCheck, Briefcase } from "lucide-react";
+import { AnimatedSection } from "@/components/AnimatedSection";
 
 const benefits = [
-  { icon: Zap, title: "Connect Instantly", description: "Quick connection to qualified attorneys" },
-  { icon: Star, title: "Top Injury Lawyers", description: "Experienced legal professionals" },
-  { icon: UserCheck, title: "Free Consultation", description: "No obligation case review" },
-  { icon: Briefcase, title: "Max Compensation", description: "Fight for what you deserve" },
+  {
+    icon: Zap,
+    title: "Connect Instantly",
+  },
+  {
+    icon: Star,
+    title: "Top Injury Lawyers",
+  },
+  {
+    icon: UserCheck,
+    title: "Free Consultation",
+  },
+  {
+    icon: Briefcase,
+    title: "Max Compensation",
+  },
 ];
 
 const WhyChooseUs = () => {
-  const router = useRouter();
+  const handleCaseReview = () => {
+    window.location.href = "/case-review";
+  };
 
   return (
-    <section className="py-20 md:py-28 bg-background">
-      <div className="container max-w-5xl">
-        <div className="text-center space-y-6 mb-16">
-          <p className="text-sm font-semibold text-accent uppercase tracking-wider">OUR PARTY</p>
-          <h2 className="text-3xl md:text-5xl font-bold text-foreground leading-tight max-w-3xl mx-auto">
-            Don't Let Insurance Companies Take Advantage
-          </h2>
-          <div className="w-16 h-1 bg-accent mx-auto" />
-          <p className="text-lg md:text-xl text-muted-foreground leading-relaxed max-w-3xl mx-auto pt-4">
-            <span className="text-accent font-bold text-2xl">A</span>ccident.com is inspired by our simple and
-            important mission: <span className="font-semibold">"Ensure everyone in America gets fast and free access to legal advice and
-            pursues the claims they are entitled to."</span> That means we've thoughtfully built our network of
-            attorneys for every type of claimant who may come our way.
-          </p>
-        </div>
+    <section className="py-12 md:py-16 bg-gray-50">
+      <div className="container max-w-7xl mx-auto px-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 items-start">
+          {/* Left Side - Tag and Heading */}
+          <AnimatedSection animationType="slide-in-left">
+            <div className="space-y-4">
+              <p className="text-xs font-semibold text-gray-500 uppercase tracking-widest">
+                WE ARE ACCIDENT.COM
+              </p>
+              <h2 className="text-2xl md:text-4xl font-semibold text-[#1e3a8a] leading-tight mt-0 md:-mt-6">
+                Don't Let Insurance Companies
+                <br />
+                Take Advantage
+              </h2>
+            </div>
+          </AnimatedSection>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-12">
-          {benefits.map((benefit, index) => {
-            const Icon = benefit.icon;
-            return (
-              <div key={index} className="text-center space-y-3">
-                <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mx-auto">
-                  <Icon className="h-8 w-8 text-primary" />
-                </div>
-                <h4 className="font-semibold text-sm text-foreground">{benefit.title}</h4>
-                <p className="text-xs text-muted-foreground">{benefit.description}</p>
+          {/* Right Side - Paragraph and Icons */}
+          <AnimatedSection animationType="slide-in-right">
+            <div className="space-y-8">
+              <p className="text-base text-gray-600 leading-relaxed">
+                <span className="text-orange-500 font-bold text-5xl float-left mr-2 leading-none">
+                  A
+                </span>
+                ccident.com is inspired by our simple and important mission:
+                "Ensure everyone in America gets fast and free access to legal
+                advice and pursues the claims they are entitled to." That means
+                we've thoughtfully built our network of attorneys for every type
+                of claimant who may come our way.
+              </p>
+
+              {/* Benefits Icons - 2x2 Grid */}
+              <div className="grid grid-cols-2 gap-x-12 gap-y-6">
+                {benefits.map((benefit, index) => {
+                  const Icon = benefit.icon;
+                  return (
+                    <div key={index} className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded border border-gray-300 flex items-center justify-center flex-shrink-0">
+                        <Icon className="h-5 w-5 text-gray-700" />
+                      </div>
+                      <h4 className="font-semibold text-base text-[#1e3a8a]">
+                        {benefit.title}
+                      </h4>
+                    </div>
+                  );
+                })}
               </div>
-            );
-          })}
-        </div>
 
-        <div className="text-center">
-          <Button
-            onClick={() => router.push('/case-review')}
-            className="bg-accent hover:bg-accent/90 text-white font-bold px-12"
-            size="lg"
-          >
-            Free Case Review
-          </Button>
+              {/* Button */}
+              <div className="pt-4">
+                <button
+                  onClick={handleCaseReview}
+                  className="inline-flex items-center gap-2 text-gray-800 font-semibold text-base hover:gap-3 transition-all"
+                >
+                  Free Case Review
+                  <svg
+                    className="w-4 h-4"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M9 5l7 7-7 7"
+                    />
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </AnimatedSection>
         </div>
       </div>
     </section>

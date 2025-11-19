@@ -1,5 +1,5 @@
 import { Scale, Facebook, Twitter, Linkedin } from "lucide-react";
-import Link from 'next/link';
+import Link from "next/link";
 
 const Footer = () => {
   const practiceAreas = [
@@ -10,9 +10,25 @@ const Footer = () => {
   ];
 
   const states = [
-    "Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado",
-    "Connecticut", "Delaware", "Florida", "Georgia", "Hawaii", "Idaho",
-    "Illinois", "Indiana", "Iowa", "Kansas", "Kentucky", "Louisiana", "Maryland",
+    "Alabama",
+    "Alaska",
+    "Arizona",
+    "Arkansas",
+    "California",
+    "Colorado",
+    "Connecticut",
+    "Delaware",
+    "Florida",
+    "Georgia",
+    "Hawaii",
+    "Idaho",
+    "Illinois",
+    "Indiana",
+    "Iowa",
+    "Kansas",
+    "Kentucky",
+    "Louisiana",
+    "Maryland",
   ];
 
   const aboutLinks = [
@@ -23,16 +39,21 @@ const Footer = () => {
   ];
 
   return (
-    <footer className="bg-primary text-primary-foreground">
+    <footer className="bg-white text-blue-900">
       <div className="container py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Practice Areas */}
           <div>
-            <h3 className="font-bold text-lg mb-4">PRACTICE AREAS</h3>
+            <h3 className="font-bold text-lg mb-4 text-blue-900">
+              PRACTICE AREAS
+            </h3>
             <ul className="space-y-2">
               {practiceAreas.map((area) => (
                 <li key={area}>
-                  <a href="#" className="text-sm text-primary-foreground/80 hover:text-primary-foreground transition-colors">
+                  <a
+                    href="#"
+                    className="text-sm text-blue-700 hover:text-blue-900 transition-colors"
+                  >
                     {area}
                   </a>
                 </li>
@@ -42,13 +63,13 @@ const Footer = () => {
 
           {/* States */}
           <div className="lg:col-span-2">
-            <h3 className="font-bold text-lg mb-4">STATES</h3>
+            <h3 className="font-bold text-lg mb-4 text-blue-900">STATES</h3>
             <div className="grid grid-cols-2 gap-2">
               {states.map((state) => (
                 <a
                   key={state}
                   href="#"
-                  className="text-sm text-primary-foreground/80 hover:text-primary-foreground transition-colors"
+                  className="text-sm text-blue-700 hover:text-blue-900 transition-colors"
                 >
                   {state}
                 </a>
@@ -58,13 +79,15 @@ const Footer = () => {
 
           {/* About */}
           <div>
-            <h3 className="font-bold text-lg mb-4">ABOUT ACCIDENT.COM</h3>
+            <h3 className="font-bold text-lg mb-4 text-blue-900">
+              ABOUT ACCIDENT.COM
+            </h3>
             <ul className="space-y-2">
               {aboutLinks.map((link) => (
                 <li key={link.label}>
                   <Link
                     href={link.to}
-                    className="text-sm text-primary-foreground/80 hover:text-primary-foreground transition-colors"
+                    className="text-sm text-blue-700 hover:text-blue-900 transition-colors"
                   >
                     {link.label}
                   </Link>
@@ -74,13 +97,22 @@ const Footer = () => {
 
             {/* Social Icons */}
             <div className="flex gap-4 mt-6">
-              <a href="#" className="hover:text-accent transition-colors">
+              <a
+                href="#"
+                className="text-blue-700 hover:text-orange-500 transition-colors"
+              >
                 <Facebook className="h-5 w-5" />
               </a>
-              <a href="#" className="hover:text-accent transition-colors">
+              <a
+                href="#"
+                className="text-blue-700 hover:text-orange-500 transition-colors"
+              >
                 <Twitter className="h-5 w-5" />
               </a>
-              <a href="#" className="hover:text-accent transition-colors">
+              <a
+                href="#"
+                className="text-blue-700 hover:text-orange-500 transition-colors"
+              >
                 <Linkedin className="h-5 w-5" />
               </a>
             </div>
@@ -88,15 +120,15 @@ const Footer = () => {
         </div>
 
         {/* Bottom Bar */}
-        <div className="mt-12 pt-8 border-t border-primary-foreground/20">
+        <div className="mt-12 pt-8 border-t border-blue-200">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
             <div className="flex items-center gap-2">
-              <Scale className="h-5 w-5 text-accent" />
-              <span className="font-bold text-lg">
-                <span className="text-accent">Accident</span>.com
+              <Scale className="h-5 w-5 text-orange-500" />
+              <span className="font-bold text-lg text-blue-900">
+                <span className="text-orange-500">Accident</span>.com
               </span>
             </div>
-            <p className="text-sm text-primary-foreground/60 text-center">
+            <p className="text-sm text-blue-600 text-center">
               © {new Date().getFullYear()} Accident.com. All rights reserved.
             </p>
           </div>
