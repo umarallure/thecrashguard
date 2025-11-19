@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from 'react';
+import { useEffect, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 
 const formIds = {
@@ -12,7 +12,7 @@ const formIds = {
   'ssdi': 'aKz95Tnb9Gus',
 };
 
-export default function CaseReviewPage() {
+function CaseReviewContent() {
   const searchParams = useSearchParams();
   const type = searchParams.get('type') || 'auto-accident';
   const formId = formIds[type as keyof typeof formIds] || formIds['auto-accident'];
@@ -39,5 +39,13 @@ export default function CaseReviewPage() {
         data-fillout-inherit-parameters
       ></div>
     </div>
+  );
+}
+
+export default function CaseReviewPage() {
+  return (
+    <Suspense fallback={<div className="w-full h-screen flex items-center justify-center">Loading form...</div>}>
+      <CaseReviewContent />
+    </Suspense>
   );
 }
