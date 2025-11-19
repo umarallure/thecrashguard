@@ -40,7 +40,7 @@ export async function generateMetadata({
     };
   }
 
-  const baseUrl = 'https://casewisesolutions.com';
+  const baseUrl = 'https://www.accidentpayments.com';
 
   return {
     title: `${post.title} | CaseWise Solutions`,
@@ -86,7 +86,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
   const toc = getTableOfContents(post.content || '');
   const relatedPosts = getRelatedPosts(params.slug, 3);
 
-  const baseUrl = 'https://casewisesolutions.com';
+  const baseUrl = 'https://www.accidentpayments.com';
   const articleSchema = generateArticleSchema(post, baseUrl);
   const breadcrumbSchema = generateBreadcrumbSchema(
     [

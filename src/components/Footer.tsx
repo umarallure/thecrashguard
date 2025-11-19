@@ -80,7 +80,7 @@ const Footer = () => {
           {/* About */}
           <div>
             <h3 className="font-bold text-lg mb-4 text-blue-900">
-              ABOUT ACCIDENT.COM
+              ABOUT Accident Payments
             </h3>
             <ul className="space-y-2">
               {aboutLinks.map((link) => (
@@ -125,11 +125,11 @@ const Footer = () => {
             <div className="flex items-center gap-2">
               <Scale className="h-5 w-5 text-orange-500" />
               <span className="font-bold text-lg text-blue-900">
-                <span className="text-orange-500">Accident</span>.com
+                <span className="text-orange-500">Accident Payments</span>.com
               </span>
             </div>
             <p className="text-sm text-blue-600 text-center">
-              © {new Date().getFullYear()} Accident.com. All rights reserved.
+              © {new Date().getFullYear()} Accident Payments. All rights reserved.
             </p>
           </div>
         </div>

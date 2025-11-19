@@ -34,7 +34,7 @@ const WhyChooseUs = () => {
           <AnimatedSection animationType="slide-in-left">
             <div className="space-y-4">
               <p className="text-xs font-semibold text-gray-500 uppercase tracking-widest">
-                WE ARE ACCIDENT.COM
+                WE ARE Accident Payments
               </p>
               <h2 className="text-2xl md:text-4xl font-semibold text-[#1e3a8a] leading-tight mt-0 md:-mt-6">
                 Don't Let Insurance Companies
@@ -51,7 +51,7 @@ const WhyChooseUs = () => {
                 <span className="text-orange-500 font-bold text-5xl float-left mr-2 leading-none">
                   A
                 </span>
-                ccident.com is inspired by our simple and important mission:
+                ccident Payments.com is inspired by our simple and important mission:
                 "Ensure everyone in America gets fast and free access to legal
                 advice and pursues the claims they are entitled to." That means
                 we've thoughtfully built our network of attorneys for every type

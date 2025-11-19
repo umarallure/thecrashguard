@@ -24,7 +24,7 @@ export const metadata: Metadata = {
     description:
       'Comprehensive legal guides, articles, and resources on personal injury, car accidents, workers compensation, and more.',
     type: 'website',
-    url: 'https://casewisesolutions.com/resources',
+    url: 'https://www.accidentpayments.com/resources',
   },
   twitter: {
     card: 'summary_large_image',
@@ -40,7 +40,7 @@ export default function ResourcesPage() {
   const categories = getAllCategories();
   const tags = getAllTags();
 
-  const baseUrl = 'https://casewisesolutions.com';
+  const baseUrl = 'https://www.accidentpayments.com';
   const organizationSchema = generateOrganizationSchema(baseUrl);
 
   return (

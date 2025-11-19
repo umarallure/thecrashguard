@@ -8,7 +8,7 @@ import {
 } from '@/lib/schema';
 
 export const metadata = {
-  title: 'Injured in an Accident? Speak with a Top Lawyer | CaseWise Solutions',
+  title: 'Injured in an Accident? Speak with a Top Lawyer | Accident Payments',
   description:
     'Expert legal assistance for personal injury, car accidents, and workers compensation. Get a free case review from experienced attorneys.',
   keywords: [
@@ -19,22 +19,22 @@ export const metadata = {
     'injury law',
   ],
   openGraph: {
-    title: 'Injured in an Accident? Speak with a Top Lawyer | CaseWise Solutions',
+    title: 'Injured in an Accident? Speak with a Top Lawyer | Accident Payments',
     description:
       'Expert legal assistance for personal injury, car accidents, and workers compensation.',
     type: 'website',
-    url: 'https://casewisesolutions.com',
+    url: 'https://www.accidentpayments.com',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Injured in an Accident? Speak with a Top Lawyer | CaseWise Solutions',
+    title: 'Injured in an Accident? Speak with a Top Lawyer | Accident Payments',
     description:
       'Expert legal assistance for personal injury, car accidents, and workers compensation.',
   },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
-  const baseUrl = 'https://casewisesolutions.com';
+  const baseUrl = 'https://www.accidentpayments.com';
   const organizationSchema = generateOrganizationSchema(baseUrl);
   const localBusinessSchema = generateLocalBusinessSchema(baseUrl);
 

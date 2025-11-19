@@ -22,7 +22,7 @@ const Navbar = () => {
         <Link href="/" className="flex items-center gap-2 font-bold text-xl">
           <Scale className="h-10 w-10 text-accent" />
           <span className="bg-gradient-to-r from-accent to-orange-600 bg-clip-text text-transparent">
-          TheCrashGuard
+          Accident Payments
           </span>
         </Link>
 

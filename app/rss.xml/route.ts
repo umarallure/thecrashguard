@@ -2,7 +2,7 @@ import { Feed } from 'feed';
 import { getAllPosts } from '@/lib/blog';
 
 export async function GET() {
-  const baseUrl = 'https://casewisesolutions.com';
+  const baseUrl = 'https://www.accidentpayments.com';
   const posts = getAllPosts();
 
   const feed = new Feed({

@@ -9,12 +9,12 @@ import { useState } from "react";
 
 const faqsAbout = [
   {
-    question: "How does TheCrashGuard work?",
+    question: "How does Accident Payments Works ?",
     answer: `1. Personal injury lawyers throughout the US tell us the types of cases they specialize in.
 
 2. Claimants (like you) submit their case details. The closest attorney, who accepts your claim type, is immediately notified.
 
-3. Your TheCrashGuard lawyer reaches out immediately to discuss your case or schedule a free consultation.`,
+3. Your Accident Payments lawyer reaches out immediately to discuss your case or schedule a free consultation.`,
   },
   {
     question: "How will my lawyer help me? Do I need a lawyer?",

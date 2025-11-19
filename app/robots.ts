@@ -9,6 +9,6 @@ export default function robots(): MetadataRoute.Robots {
         disallow: ['/api/', '/admin/'],
       },
     ],
-    sitemap: 'https://casewisesolutions.com/sitemap.xml',
+    sitemap: 'https://www.accidentpayments.com/sitemap.xml',
   };
 }
