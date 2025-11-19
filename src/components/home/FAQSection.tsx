@@ -5,8 +5,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { useState } from 'react';
-import { Plus } from "lucide-react";
+import { useState } from "react";
 
 const faqsAbout = [
   {
@@ -55,10 +54,12 @@ const faqsWhyHire = [
 const faqsDefault = faqsAbout; // Use About as default for now
 
 const FAQSection = () => {
-  const [category, setCategory] = useState<'about' | 'whyHire' | 'faq'>('about');
-  const selectedFaqs = category === 'whyHire' ? faqsWhyHire : faqsDefault;
+  const [category, setCategory] = useState<"about" | "whyHire" | "faq">(
+    "about"
+  );
+  const selectedFaqs = category === "whyHire" ? faqsWhyHire : faqsDefault;
   return (
-    <section id="faq" className="py-16 md:py-24">
+    <section id="faq" className="py-12 md:py-16">
       <div className="container max-w-7xl">
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-5xl font-bold text-foreground mb-4">
@@ -71,30 +72,57 @@ const FAQSection = () => {
           {/* Left Nav */}
           <aside className="hidden md:block md:col-span-3">
             <nav className="space-y-4">
-              <button onClick={() => setCategory('about')} className={`w-full text-left rounded-md px-6 py-3 font-medium ${category === 'about' ? 'bg-black text-white' : 'text-foreground hover:bg-muted/10'}`}>About Us</button>
-              <button onClick={() => setCategory('whyHire')} className={`w-full text-left rounded-md px-6 py-3 font-medium ${category === 'whyHire' ? 'bg-black text-white' : 'text-foreground hover:bg-muted/10'}`}>Why Hire a Lawyer</button>
-              <button onClick={() => setCategory('faq')} className={`w-full text-left rounded-md px-6 py-3 font-medium ${category === 'faq' ? 'bg-black text-white' : 'text-foreground hover:bg-muted/10'}`}>FAQ</button>
+              <button
+                onClick={() => setCategory("about")}
+                className={`w-full text-left rounded-md px-6 py-3 font-medium ${
+                  category === "about"
+                    ? "bg-black text-white"
+                    : "text-foreground hover:bg-muted/10"
+                }`}
+              >
+                About Us
+              </button>
+              <button
+                onClick={() => setCategory("whyHire")}
+                className={`w-full text-left rounded-md px-6 py-3 font-medium ${
+                  category === "whyHire"
+                    ? "bg-black text-white"
+                    : "text-foreground hover:bg-muted/10"
+                }`}
+              >
+                Why Hire a Lawyer
+              </button>
+              <button
+                onClick={() => setCategory("faq")}
+                className={`w-full text-left rounded-md px-6 py-3 font-medium ${
+                  category === "faq"
+                    ? "bg-black text-white"
+                    : "text-foreground hover:bg-muted/10"
+                }`}
+              >
+                FAQ
+              </button>
             </nav>
           </aside>
 
           {/* Accordion */}
-          <div className="md:col-span-9">
+          <div className="md:col-span-9 animate-fade-in-up">
             <Accordion type="single" collapsible className="w-full space-y-4">
-          {selectedFaqs.map((faq, index) => (
-            <AccordionItem
-              key={index}
-              value={`item-${index}`}
-              className="border rounded-md px-4 py-2 data-[state=open]:border-accent"
-            >
-              <AccordionTrigger className="flex items-center gap-4 text-left font-bold text-foreground text-xl md:text-2xl hover:text-accent hover:no-underline">
-                <Plus className="h-5 w-5 text-primary data-[state=open]:rotate-45 transition-transform" />
-                <span className="flex-1">{faq.question}</span>
-              </AccordionTrigger>
-              <AccordionContent className="text-muted-foreground whitespace-pre-line">
-                {faq.answer}
-              </AccordionContent>
-            </AccordionItem>
-          ))}
+              {selectedFaqs.map((faq, index) => (
+                <AccordionItem
+                  key={index}
+                  value={`item-${index}`}
+                  className="border rounded-md px-4 py-2 data-[state=open]:border-accent"
+                >
+                  <AccordionTrigger className="flex items-center gap-4 text-left font-semibold text-foreground text-lg md:text-xl hover:text-accent hover:no-underline">
+                    {/* <Plus className="h-5 w-5 text-primary data-[state=open]:rotate-45 transition-transform" /> */}
+                    <span className="flex-1">{faq.question}</span>
+                  </AccordionTrigger>
+                  <AccordionContent className="text-muted-foreground whitespace-pre-line">
+                    {faq.answer}
+                  </AccordionContent>
+                </AccordionItem>
+              ))}
             </Accordion>
           </div>
         </div>
