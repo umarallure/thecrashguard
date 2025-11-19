@@ -19,7 +19,6 @@ export default function HomePage() {
         <CTABanner />
         <VehicleAccidentSection />
         <LegalCategories />
-        
       </main>
     </div>
   );

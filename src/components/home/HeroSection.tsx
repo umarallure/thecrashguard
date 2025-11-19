@@ -9,7 +9,7 @@ const accidentTypes = [
   { value: "auto-accident", label: "Auto Accident", icon: "https://cdn.prod.website-files.com/5d51b2f2cab8fe67a35631d8/5d5333ed64234cda8dd49833_Auto%20Accident.png" },
   { value: "malpractice", label: "Malpractice", icon: "https://cdn.prod.website-files.com/5d51b2f2cab8fe67a35631d8/5d53355232c94a7b2e216293_Medical%20(1).png" },
   { value: "personal-injury", label: "Personal Injury", icon: "https://cdn.prod.website-files.com/5d51b2f2cab8fe67a35631d8/5d5336e232c94a355821725a_accidentCom_injury_blue.svg" },
-  { value: "workers-comp", label: "Workers Comp", icon: "https://cdn.prod.website-files.com/5d51b2f2cab8feda6f5631e4/5eea6d2e2b910eb2f3e54ca4_5d51b4f777dd5094a86c6527_accidentCom_workers_orange.png" },
+  { value: "workers-comp", label: "Workers Compensation", icon: "https://cdn.prod.website-files.com/5d51b2f2cab8feda6f5631e4/5eea6d2e2b910eb2f3e54ca4_5d51b4f777dd5094a86c6527_accidentCom_workers_orange.png" },
   { value: "slip-and-fall", label: "Slip And Fall", icon: "https://cdn.prod.website-files.com/5d51b2f2cab8fe67a35631d8/5d53373229b8f7fbfe99e5bc_accidentCom_slip_and_fall_blue.png" },
   { value: "ssdi", label: "Social Security (SSDI)", icon: "https://cdn.prod.website-files.com/5d51b2f2cab8fe67a35631d8/5d5335525c5ff36299792c53_Wrongful%20Death.png" },
 ];
