@@ -9,7 +9,7 @@ export default function ShortFormSection() {
           {/* Left Side - Laptop Image */}
           <div className="relative flex items-center justify-center">
             <img
-              src="/lptop.png"
+              src="https://cdn.prod.website-files.com/5d51b2f2cab8fe67a35631d8/5d8a13d8ecc118a3ba3c7025_5d51c8e4a9f828068d022350_Autoform_optimized-p-500.png "
               alt="Laptop showing form"
               className="w-full h-auto object-contain"
             />
