@@ -12,7 +12,7 @@ export default function ModernNavbar() {
           {/* Logo */}
           <div className="flex items-center gap-3">
             <div className="w-12 h-12 rounded-full bg-gradient-to-br from-orange-400 to-orange-600 flex items-center justify-center shadow-lg">
-              <Scale className="h-6 w-6 text-white" />
+              <Scale className="h-10 w-10 text-white" />
             </div>
             <span className="font-bold text-2xl text-gray-900">
               <span className="text-orange-500">Accident Payments</span>
