@@ -1,11 +1,14 @@
-import HeroSection from '@/components/home/HeroSection';
-import HowItWorks from '@/components/home/HowItWorks';
-import WhyChooseUs from '@/components/home/WhyChooseUs';
-import CTABanner from '@/components/home/CTABanner';
-import ResourceGallery from '@/components/home/ResourceGallery';
-import LegalCategories from '@/components/home/LegalCategories';
-import VehicleAccidentSection from '@/components/home/VehicleAccidentSection';
-import FAQSection from '@/components/home/FAQSection';
+import HeroSection from "@/components/home/HeroSection";
+import HowItWorks from "@/components/home/HowItWorks";
+import WhyChooseUs from "@/components/home/WhyChooseUs";
+import CTABanner from "@/components/home/CTABanner";
+import ResourceGallery from "@/components/home/ResourceGallery";
+import LegalCategories from "@/components/home/LegalCategories";
+import VehicleAccidentSection from "@/components/home/VehicleAccidentSection";
+import FAQSection from "@/components/home/FAQSection";
+import Testimonias from "@/components/home/Testimonials";
+import AboutUsSection from "@/components/home/About";
+import ContactForm from "@/components/home/ContactUsForm";
 
 export default function HomePage() {
   return (
@@ -19,6 +22,9 @@ export default function HomePage() {
         <CTABanner />
         <VehicleAccidentSection />
         <LegalCategories />
+        <AboutUsSection />
+        <Testimonias />
+        <ContactForm />
       </main>
     </div>
   );

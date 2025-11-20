@@ -1,57 +1,51 @@
-"use client";
-import { Car } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { useRouter } from "next/navigation";
+import React from "react";
+import { ChevronRight } from "lucide-react";
 
-const VehicleAccidentSection = () => {
-  const router = useRouter();
-
+export default function ShortFormSection() {
   return (
-    <section className="py-12 md:py-16 bg-background">
-      <div className="container max-w-4xl">
-        <div className="text-center space-y-8 animate-fade-in-up">
-          <div className="w-32 h-32 md:w-40 md:h-40 rounded-full bg-primary/10 flex items-center justify-center mx-auto animate-scale-in">
-            <Car className="w-16 h-16 md:w-20 md:h-20 text-primary" />
+    <section className="py-16 md:py-24 bg-gray-50">
+      <div className="max-w-7xl mx-auto px-6 md:px-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          {/* Left Side - Laptop Image */}
+          <div className="relative flex items-center justify-center">
+            <img
+              src="/lptop.png"
+              alt="Laptop showing form"
+              className="w-full h-auto object-contain"
+            />
           </div>
 
-          <h2 className="text-3xl md:text-5xl font-bold text-foreground leading-tight">
-            Been in a Vehicle Accident?
-          </h2>
+          {/* Right Side - Content */}
+          <div className="space-y-6">
+            <div>
+              <p className="text-sm font-semibold text-gray-500 tracking-widest uppercase mb-4">
+                1-3 MINUTE FORM
+              </p>
 
-          <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-            If you've been involved in an auto accident, you may be entitled to
-            compensation for your injuries, medical bills, lost wages, and pain
-            and suffering. Our network of experienced attorneys can help you
-            navigate the complex legal process and fight for the maximum
-            settlement you deserve.
-          </p>
+              <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6 leading-tight">
+                Fill Out Short Form
+              </h2>
 
-          <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
-            <Button
-              onClick={() => router.push("/case-review")}
-              className="bg-accent hover:bg-accent/90 text-white font-bold px-8"
-              size="lg"
-            >
-              Get Free Consultation
-            </Button>
-            <Button
-              onClick={() => router.push("/resources")}
-              variant="outline"
-              className="font-semibold px-8"
-              size="lg"
-            >
-              Learn More
-            </Button>
+              <p className="text-lg text-gray-600 leading-relaxed">
+                Submit a short form that takes less than 3 minutes to complete.
+                We will use this information to connect you to a top lawyer in
+                our network.
+              </p>
+            </div>
+
+            {/* CTA Link */}
+            <div>
+              <a
+                href="#"
+                className="inline-flex items-center gap-2 text-lg font-semibold text-gray-900 hover:text-orange-600 transition-colors group"
+              >
+                Free Case Review
+                <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              </a>
+            </div>
           </div>
-
-          <p className="text-sm text-muted-foreground pt-4">
-            ✓ No upfront costs &nbsp;•&nbsp; ✓ Free case evaluation
-            &nbsp;•&nbsp; ✓ Available 24/7
-          </p>
         </div>
       </div>
     </section>
   );
-};
-
-export default VehicleAccidentSection;
+}
