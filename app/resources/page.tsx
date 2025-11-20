@@ -1,4 +1,5 @@
 import { Metadata } from 'next';
+import { Suspense } from 'react';
 import {
   getAllPosts,
   getFeaturedPosts,
@@ -51,12 +52,14 @@ export default function ResourcesPage() {
           __html: JSON.stringify(organizationSchema),
         }}
       />
-      <BlogListing
-        posts={posts}
-        featuredPosts={featuredPosts}
-        categories={categories}
-        tags={tags}
-      />
+      <Suspense fallback={<div>Loading...</div>}>
+        <BlogListing
+          posts={posts}
+          featuredPosts={featuredPosts}
+          categories={categories}
+          tags={tags}
+        />
+      </Suspense>
     </>
   );
 }

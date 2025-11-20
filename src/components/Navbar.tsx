@@ -2,9 +2,10 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Button } from "@/components/ui/button";
-import { Scale, Menu } from "lucide-react";
+import { Menu } from "lucide-react";
 import { useState } from "react";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import Image from 'next/image';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -20,7 +21,7 @@ const Navbar = () => {
     <nav className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-16 items-center justify-between relative">
         <Link href="/" className="flex items-center gap-2 font-bold text-xl">
-          <Scale className="h-10 w-10 text-accent" />
+          <Image src="/logo.png" alt="Accident Payments" width={40} height={40} className="h-10 w-10" priority />
           <span className="bg-gradient-to-r from-accent to-orange-600 bg-clip-text text-transparent">
           Accident Payments
           </span>
