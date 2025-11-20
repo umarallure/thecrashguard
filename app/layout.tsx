@@ -18,6 +18,11 @@ export const metadata = {
     'legal consultation',
     'injury law',
   ],
+  icons: {
+    icon: '/logo.png',
+    shortcut: '/logo.png',
+    apple: '/logo.png',
+  },
   openGraph: {
     title: 'Injured in an Accident? Speak with a Top Lawyer | Accident Payments',
     description:
