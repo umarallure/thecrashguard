@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { Card } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
@@ -90,14 +91,38 @@ export default function BlogPostContent({
         </div>
       </section>
 
-      {/* Hero Image */}
-      <section className="relative h-[400px] md:h-[500px] overflow-hidden">
+      {/* Hero Image with centered title overlay */}
+      <section className="relative h-[420px] md:h-[540px] overflow-hidden">
         <img
           src={post.image}
           alt={post.title}
           className="w-full h-full object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/50 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-transparent" />
+
+        {/* Title and meta anchored at the bottom of the image */}
+        <div className="absolute inset-x-0 bottom-0 flex flex-col items-center justify-end text-center px-6 pb-12 md:pb-20">
+          <Badge variant="default" className="text-sm mb-2">{post.category}</Badge>
+          <h1 className="text-3xl md:text-5xl font-bold text-black max-w-4xl">
+            {post.title}
+          </h1>
+          <p className="text-sm md:text-base text-black/70 mt-3 max-w-2xl">{post.description}</p>
+          {/* Author and meta details centered below the title */}
+          <div className="flex items-center gap-4 text-sm text-black/70 mt-4">
+            <div className="flex items-center gap-2">
+              <User className="w-4 h-4" />
+              <span>{post.author}</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <Calendar className="w-4 h-4" />
+              <span>{formatDate(post.date)}</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <Clock className="w-4 h-4" />
+              <span>{post.readingTime}</span>
+            </div>
+          </div>
+        </div>
       </section>
 
       {/* Article Content */}
@@ -107,43 +132,7 @@ export default function BlogPostContent({
             {/* Main Content */}
             <div className="lg:col-span-8">
               <article>
-                {/* Header */}
-                <header className="mb-8 space-y-4">
-                  <Badge variant="default" className="text-sm">
-                    {post.category}
-                  </Badge>
-                  <h1 className="text-4xl md:text-5xl font-bold text-foreground">
-                    {post.title}
-                  </h1>
-                  <p className="text-xl text-muted-foreground">
-                    {post.description}
-                  </p>
-
-                  {/* Meta Info */}
-                  <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground pt-4">
-                    <div className="flex items-center gap-2">
-                      <User className="w-4 h-4" />
-                      <span>{post.author}</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <Calendar className="w-4 h-4" />
-                      <span>{formatDate(post.date)}</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <Clock className="w-4 h-4" />
-                      <span>{post.readingTime}</span>
-                    </div>
-                  </div>
-
-                  {/* Tags */}
-                  <div className="flex flex-wrap gap-2 pt-4">
-                    {post.tags.map((tag) => (
-                      <Badge key={tag} variant="secondary">
-                        {tag}
-                      </Badge>
-                    ))}
-                  </div>
-                </header>
+                {/* Header intentionally minimal — meta appears on the hero */}
 
                 <Separator className="my-8" />
 
@@ -234,7 +223,42 @@ export default function BlogPostContent({
             {/* Sidebar */}
             <aside className="lg:col-span-4">
               <div className="sticky top-24 space-y-8">
-                {/* Table of Contents */}
+                {/* Mini CTA (copy of BlogListing's mini hero form) */}
+                <Card className="p-6 bg-white shadow-lg">
+                  <h3 className="font-bold text-xl text-center mb-2 text-accent">Speak to a Lawyer Near You.</h3>
+                  <p className="text-sm text-center text-muted-foreground mb-4">Choose Accident Type</p>
+                  <div className="grid grid-cols-2 gap-3 mb-4">
+                    {[
+                      { value: "auto-accident", label: "Auto Accident", icon: "https://cdn.prod.website-files.com/5d51b2f2cab8fe67a35631d8/5d5333ed64234cda8dd49833_Auto%20Accident.png" },
+                      { value: "workers-comp", label: "Workers Comp", icon: "https://cdn.prod.website-files.com/5d51b2f2cab8feda6f5631e4/5eea6d2e2b910eb2f3e54ca4_5d51b4f777dd5094a86c6527_accidentCom_workers_orange.png" },
+                      { value: "personal-injury", label: "Personal Injury", icon: "https://cdn.prod.website-files.com/5d51b2f2cab8fe67a35631d8/5d5336e232c94a355821725a_accidentCom_injury_blue.svg" },
+                      { value: "ssdi", label: "Wrongful Death", icon: "https://cdn.prod.website-files.com/5d51b2f2cab8fe67a35631d8/5d5335525c5ff36299792c53_Wrongful%20Death.png" },
+                    ].map((type) => (
+                      <Link key={type.value} href={`/case-review?type=${type.value}`} className="flex flex-col items-center gap-2 p-3 hover:bg-accent/5 rounded-lg transition-all group">
+                        <div className="w-12 h-12">
+                          <img src={type.icon} alt={type.label} className="w-full h-full object-contain group-hover:scale-110 transition-transform" />
+                        </div>
+                        <span className="text-xs text-center font-medium text-gray-700">{type.label}</span>
+                      </Link>
+                    ))}
+                  </div>
+                  <div className="space-y-3">
+                    <select className="w-full px-3 py-2 border border-gray-200 rounded-md text-sm bg-gray-50">
+                      <option>Auto Accident</option>
+                      <option>Malpractice</option>
+                      <option>Personal Injury</option>
+                      <option>Workers Comp</option>
+                      <option>Slip And Fall</option>
+                      <option>Social Security (SSDI)</option>
+                    </select>
+                    <Input placeholder="Enter city or ZIP" className="bg-gray-50 border-gray-200 text-sm" />
+                    <Button className="w-full bg-accent hover:bg-accent/90 text-white font-bold" asChild>
+                      <Link href="/case-review">Find Lawyer</Link>
+                    </Button>
+                  </div>
+                </Card>
+
+                {/* Category list (copy from BlogListing) */}
                 {toc.length > 0 && (
                   <Card className="p-6">
                     <h3 className="font-bold text-lg mb-4">Table of Contents</h3>
@@ -256,6 +280,34 @@ export default function BlogPostContent({
                   </Card>
                 )}
 
+                <Card className="p-6">
+                  <div className="flex gap-2 mb-4">
+                    <Button variant={'outline'} size="sm" className="flex-1" onClick={() => {}}>Categories</Button>
+                    <Button variant={'outline'} size="sm" className="flex-1" onClick={() => {}}>All States</Button>
+                  </div>
+                  <div className="grid grid-cols-2 gap-3">
+                    {[
+                      { name: 'CAR ACCIDENT RESOURCES', icon: 'https://cdn.prod.website-files.com/5d51b2f2cab8feda6f5631e4/66eb265601b5a94ef3da67dd_unnamed-11.png' },
+                      { name: 'CASE STUDIES & INFOGRAPHICS', icon: 'https://cdn.prod.website-files.com/5d51b2f2cab8feda6f5631e4/66eb2659ab8822bf67ab8631_research.png' },
+                      { name: 'ESPAÑOL', icon: 'https://cdn.prod.website-files.com/5d51b2f2cab8feda6f5631e4/66eb2654a731cde582681e09_united-states-of-america.png' },
+                      { name: 'MEDICAL MALPRACTICE', icon: 'https://cdn.prod.website-files.com/5d51b2f2cab8feda6f5631e4/66eb265b01b5a94ef3da68a3_medical-checkup.png' },
+                      { name: 'SSDI BENEFITS', icon: 'https://cdn.prod.website-files.com/5d51b2f2cab8feda6f5631e4/66eb2659c7c1a9de2c288c25_health-insurance.png' },
+                      { name: 'TOP NEWS & PRESS RELEASES', icon: 'https://cdn.prod.website-files.com/5d51b2f2cab8feda6f5631e4/66eb26564356c4b3e3a069a6_press-release_%2525285%252529.png' },
+                      { name: 'WHAT TO DO AFTER A CAR ACCIDENT', icon: 'https://cdn.prod.website-files.com/5d51b2f2cab8feda6f5631e4/66eb261b01b5a94ef3da64b3_ambulance_%2525281%252529.png' },
+                      { name: 'WORKERS COMPENSATION', icon: 'https://cdn.prod.website-files.com/5d51b2f2cab8feda6f5631e4/66eb265985cfd367bd6204f4_hammer_icon.png' },
+                    ].map((category) => (
+                      <Link key={category.name} href={`/resources?category=${encodeURIComponent(category.name)}`} className="flex flex-col items-center gap-2 p-4 border rounded-lg hover:border-accent hover:bg-accent/5 transition-all group text-center">
+                        <div className="w-12 h-12 flex items-center justify-center">
+                          <img src={category.icon} alt={category.name} className="w-full h-full object-contain group-hover:scale-110 transition-transform" />
+                        </div>
+                        <span className="text-xs font-medium uppercase text-gray-700 leading-tight">
+                          {category.name}
+                        </span>
+                      </Link>
+                    ))}
+                  </div>
+                </Card>
+
                 {/* CTA Card */}
                 <Card className="p-6 bg-accent text-accent-foreground">
                   <h3 className="font-bold text-xl mb-3">Need Legal Help?</h3>
@@ -273,37 +325,6 @@ export default function BlogPostContent({
                       <ArrowRight className="w-4 h-4 ml-2" />
                     </Link>
                   </Button>
-                </Card>
-
-                {/* Contact Info */}
-                <Card className="p-6">
-                  <h3 className="font-bold text-lg mb-4">Contact Us</h3>
-                  <div className="space-y-3 text-sm">
-                    <div>
-                      <p className="font-medium">Phone</p>
-                      <a
-                        href="tel:+15551234567"
-                        className="text-accent hover:underline"
-                      >
-                        +1 (555) 123-4567
-                      </a>
-                    </div>
-                    <div>
-                      <p className="font-medium">Email</p>
-                      <a
-                        href="mailto:info@casewisesolutions.com"
-                        className="text-accent hover:underline"
-                      >
-                        info@casewisesolutions.com
-                      </a>
-                    </div>
-                    <div>
-                      <p className="font-medium">Office Hours</p>
-                      <p className="text-muted-foreground">
-                        Mon-Fri: 9:00 AM - 5:00 PM
-                      </p>
-                    </div>
-                  </div>
                 </Card>
               </div>
             </aside>
