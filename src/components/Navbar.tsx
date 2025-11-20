@@ -2,10 +2,9 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Button } from "@/components/ui/button";
-import { Menu } from "lucide-react";
+import { Scale, Menu } from "lucide-react";
 import { useState } from "react";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import Image from 'next/image';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -21,51 +20,84 @@ const Navbar = () => {
     <nav className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-16 items-center justify-between relative">
         <Link href="/" className="flex items-center gap-2 font-bold text-xl">
-          <Image src="/logo.png" alt="Accident Payments" width={40} height={40} className="h-10 w-10" priority />
+          <Scale className="h-10 w-10 text-accent" />
           <span className="bg-gradient-to-r from-accent to-orange-600 bg-clip-text text-transparent">
           Accident Payments
           </span>
         </Link>
 
-        {/* Desktop Navigation (show only CTA) */}
-        <div className="hidden md:block">
-          <div className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2">
-            <Button asChild className="bg-accent hover:bg-accent/90">
-              <Link href="/case-review">Get Free Case Review</Link>
-            </Button>
+          {/* Desktop Menu */}
+          <div className="hidden md:flex items-center gap-8">
+            {/* Resources Link */}
+            <a
+              href="/resources"
+              className="text-gray-700 hover:text-orange-500 font-medium transition-colors duration-200"
+            >
+              Resources
+            </a>
+
+            {/* CTA Button */}
+            <a
+              href="/case-review"
+              className="px-6 py-3 bg-orange-500 hover:bg-orange-600 text-white font-semibold rounded-lg shadow-md hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-200"
+            >
+              Get Free Case Review
+            </a>
           </div>
+
+          {/* Mobile Menu Button */}
+          <button
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            className="md:hidden text-gray-700 hover:text-orange-500 transition-colors"
+          >
+            {isMenuOpen ? (
+              <X className="w-6 h-6" />
+            ) : (
+              <Menu className="w-6 h-6" />
+            )}
+          </button>
         </div>
 
-        {/* Mobile Navigation */}
-        <Sheet open={isOpen} onOpenChange={setIsOpen}>
-          <SheetTrigger asChild className="md:hidden">
-            <Button variant="ghost" size="icon">
-              <Menu className="h-5 w-5" />
-            </Button>
-          </SheetTrigger>
-          <SheetContent>
-            <div className="flex flex-col gap-4 mt-8">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.to}
-                  href={link.to}
-                  className="text-lg font-medium text-muted-foreground hover:text-primary transition-colors"
-                  onClick={() => setIsOpen(false)}
-                >
-                  {link.label}
-                </Link>
-              ))}
-              <Button asChild className="bg-accent hover:bg-accent/90 mt-4">
-                <Link href="/case-review" onClick={() => setIsOpen(false)}>
-                  Get Free Case Review
-                </Link>
-              </Button>
+        {/* Mobile Menu */}
+        {isMenuOpen && (
+          <div className="md:hidden mt-4 pb-4 border-t border-gray-100 pt-4 animate-slideDown">
+            <div className="flex flex-col gap-4">
+              {/* Resources Link */}
+              <a
+                href="/resources"
+                className="text-gray-700 hover:text-orange-500 font-medium transition-colors duration-200"
+              >
+                Resources
+              </a>
+
+              {/* CTA Button */}
+              <a
+                href="/case-review"
+                className="w-full text-center px-6 py-3 bg-orange-500 hover:bg-orange-600 text-white font-semibold rounded-lg shadow-md transition-colors duration-200"
+              >
+                Get Free Case Review
+              </a>
             </div>
-          </SheetContent>
-        </Sheet>
+          </div>
+        )}
       </div>
+
+      <style>{`
+        @keyframes slideDown {
+          from {
+            opacity: 0;
+            max-height: 0;
+          }
+          to {
+            opacity: 1;
+            max-height: 500px;
+          }
+        }
+
+        .animate-slideDown {
+          animation: slideDown 0.3s ease-out;
+        }
+      `}</style>
     </nav>
   );
-};
-
-export default Navbar;
+}
