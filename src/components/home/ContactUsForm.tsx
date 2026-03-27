@@ -1,5 +1,6 @@
 "use client";
 import React, { useState } from "react";
+import Link from "next/link";
 
 export default function ContactForm() {
   const [formData, setFormData] = useState({
@@ -9,8 +10,14 @@ export default function ContactForm() {
     caseType: "Auto Accident",
     message: "",
   });
+  const [smsConsent, setSmsConsent] = useState(false);
+  const [termsConsent, setTermsConsent] = useState(false);
 
-  const handleChange = (e) => {
+  const handleChange = (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >
+  ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
       ...prev,
@@ -19,7 +26,19 @@ export default function ContactForm() {
   };
 
   const handleSubmit = () => {
-    console.log("Form submitted:", formData);
+    if (!termsConsent) {
+      alert(
+        "Please review and accept our Terms and Conditions and Privacy Policy."
+      );
+      return;
+    }
+
+    console.log("Form submitted:", {
+      ...formData,
+      smsConsent,
+      termsConsent,
+      timestamp: new Date().toISOString(),
+    });
     alert(
       "Message sent successfully! We will be in touch with you in less than 24 hours."
     );
@@ -42,7 +61,7 @@ export default function ContactForm() {
             </div>
 
             <p className="text-gray-500 leading-relaxed">
-              Please fill out the following form and we'll be in <br /> touch
+              Please fill out the following form and we&apos;ll be in <br /> touch
               with you in less than 24 hours.
             </p>
           </div>
@@ -82,7 +101,7 @@ export default function ContactForm() {
                   name="phone"
                   value={formData.phone}
                   onChange={handleChange}
-                  placeholder="Your Phone"
+                  placeholder="Your Phone (optional)"
                   className="block w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all placeholder-gray-400"
                 />
               </div>
@@ -116,6 +135,60 @@ export default function ContactForm() {
                 placeholder="Message..."
                 className="block w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all resize-none placeholder-gray-400"
               ></textarea>
+            </div>
+
+            {/* Checkbox 1: SMS Consent */}
+            <div className="flex items-start gap-3">
+              <input
+                type="checkbox"
+                id="contactSmsConsent"
+                checked={smsConsent}
+                onChange={(e) => setSmsConsent(e.target.checked)}
+                className="mt-1 h-4 w-4 rounded border-gray-300 text-orange-500 focus:ring-orange-500 cursor-pointer flex-shrink-0"
+              />
+              <label
+                htmlFor="contactSmsConsent"
+                className="text-xs text-gray-600 leading-relaxed cursor-pointer"
+              >
+                By checking this box, I agree to receive SMS messages from
+                Accident Payments, including appointment reminders and
+                notifications. Message frequency varies. Message and data rates
+                may apply. Reply STOP to unsubscribe. Reply HELP for help.
+                Consent is not a condition of purchase.
+              </label>
+            </div>
+
+            {/* Checkbox 2: Terms & Privacy */}
+            <div className="flex items-start gap-3">
+              <input
+                type="checkbox"
+                id="contactTermsConsent"
+                checked={termsConsent}
+                onChange={(e) => setTermsConsent(e.target.checked)}
+                className="mt-1 h-4 w-4 rounded border-gray-300 text-orange-500 focus:ring-orange-500 cursor-pointer flex-shrink-0"
+              />
+              <label
+                htmlFor="contactTermsConsent"
+                className="text-xs text-gray-600 leading-relaxed cursor-pointer"
+              >
+                I have reviewed and accept Accident Payments&apos;{" "}
+                <Link
+                  href="/terms"
+                  className="text-orange-500 hover:text-orange-600 underline"
+                  target="_blank"
+                >
+                  Terms and Conditions
+                </Link>{" "}
+                and{" "}
+                <Link
+                  href="/privacy-policy"
+                  className="text-orange-500 hover:text-orange-600 underline"
+                  target="_blank"
+                >
+                  Privacy Policy
+                </Link>
+                .
+              </label>
             </div>
 
             {/* Submit Button */}
