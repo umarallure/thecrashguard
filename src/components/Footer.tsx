@@ -180,7 +180,9 @@ export default function Footer() {
   const aboutLinks = [
     { label: "About Us", to: "/" },
     { label: "Contact Us", to: "/" },
-    { label: "Terms", to: "/" },
+    { label: "Terms & Conditions", to: "/terms" },
+    { label: "Privacy Policy", to: "/privacy-policy" },
+    { label: "SMS Sign Up", to: "/sms-signup" },
     { label: "Become Law Firm Partner", to: "/" },
   ];
 
