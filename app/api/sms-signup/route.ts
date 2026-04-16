@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import { supabaseServer } from "@/lib/supabase-server";
-import { createAlowareContact } from "@/lib/aloware";
+import { createAlowareContact, type AlowareResult } from "@/lib/aloware";
 import {
   CHECKBOX_SMS_TEXT,
   CHECKBOX_TERMS_TEXT,
@@ -37,6 +37,122 @@ const schema = z.object({
     }),
   }),
 });
+
+type RouteFieldErrors = Partial<Record<"phone" | "email" | "form", string[]>>;
+
+type AlowareHandling =
+  | { kind: "success" }
+  | { kind: "user_error"; details: RouteFieldErrors }
+  | { kind: "warning"; warning: string };
+
+const isRecord = (value: unknown): value is Record<string, unknown> =>
+  typeof value === "object" && value !== null && !Array.isArray(value);
+
+const toMessages = (value: unknown): string[] => {
+  if (typeof value === "string") return [value];
+  if (Array.isArray(value)) {
+    return value.filter((item): item is string => typeof item === "string");
+  }
+  return [];
+};
+
+const getAlowareMessage = (body: unknown): string | null => {
+  if (!isRecord(body)) return null;
+  if (typeof body.error === "string" && body.error.trim()) return body.error.trim();
+  if (typeof body.message === "string" && body.message.trim())
+    return body.message.trim();
+  return null;
+};
+
+const getAlowareValidationErrors = (
+  body: unknown
+): Record<string, string[]> => {
+  if (!isRecord(body) || !isRecord(body.errors)) return {};
+
+  const output: Record<string, string[]> = {};
+  for (const [field, value] of Object.entries(body.errors)) {
+    const messages = toMessages(value);
+    if (messages.length > 0) output[field] = messages;
+  }
+  return output;
+};
+
+const mapAlowareFieldMessage = (
+  field: "phone" | "email" | "form",
+  message: string
+): string => {
+  const lower = message.toLowerCase();
+
+  if (field === "phone") {
+    if (lower.includes("required")) return "Mobile phone is required for SMS";
+    if (lower.includes("invalid") || lower.includes("empty"))
+      return "Enter a valid mobile phone number";
+  }
+
+  if (field === "email" && lower.includes("invalid")) {
+    return "Enter a valid email address";
+  }
+
+  return message;
+};
+
+const classifyAlowareResult = (aloware: AlowareResult): AlowareHandling => {
+  if (aloware.ok) return { kind: "success" };
+
+  const bodyMessage = getAlowareMessage(aloware.body);
+  const rawErrors = getAlowareValidationErrors(aloware.body);
+  const details: RouteFieldErrors = {};
+
+  for (const [field, messages] of Object.entries(rawErrors)) {
+    const mappedField =
+      field === "phone_number" || field === "phone"
+        ? "phone"
+        : field === "email"
+          ? "email"
+          : field === "message"
+            ? "form"
+            : null;
+
+    if (!mappedField) continue;
+
+    details[mappedField] = messages.map((message) =>
+      mapAlowareFieldMessage(mappedField, message)
+    );
+  }
+
+  if (Object.keys(details).length > 0) {
+    return { kind: "user_error", details };
+  }
+
+  const normalizedMessage = bodyMessage?.toLowerCase() ?? "";
+  if (
+    normalizedMessage.includes("phone number is empty or invalid") ||
+    (normalizedMessage.includes("phone") && normalizedMessage.includes("invalid"))
+  ) {
+    return {
+      kind: "user_error",
+      details: { phone: ["Enter a valid mobile phone number"] },
+    };
+  }
+
+  if (
+    normalizedMessage.includes("already exists") ||
+    normalizedMessage.includes("already been taken") ||
+    normalizedMessage.includes("duplicate")
+  ) {
+    return {
+      kind: "warning",
+      warning:
+        "This phone number is already on file. We recorded your latest signup and will review the existing contact.",
+    };
+  }
+
+  return {
+    kind: "warning",
+    warning:
+      "We received your signup, but could not fully sync it with our messaging platform yet. Our team will review it shortly.",
+  };
+};
 
 export async function POST(request: Request) {
   let json: unknown;
@@ -92,10 +208,25 @@ export async function POST(request: Request) {
     lead_source: "Website SMS Opt-In",
     notes: `Consent captured ${new Date().toISOString()} from ${pageUrl ?? "unknown page"}`,
   });
+  const alowareHandling = classifyAlowareResult(aloware);
 
   if (!aloware.ok) {
     console.error("Aloware forwarding failed:", aloware.status, aloware.body);
   }
+
+  if (alowareHandling.kind === "user_error") {
+    return NextResponse.json(
+      {
+        error: "Validation failed",
+        details: alowareHandling.details,
+      },
+      { status: 400 }
+    );
+  }
+
+  const alowareErrorText = aloware.ok
+    ? null
+    : getAlowareMessage(aloware.body) ?? `HTTP ${aloware.status}`;
 
   // 2. Write the consent record. No .select() — returning the inserted row
   //    would trigger a SELECT RLS check, and we intentionally have no SELECT
@@ -118,7 +249,7 @@ export async function POST(request: Request) {
       page_url: pageUrl,
       aloware_forwarded: aloware.ok,
       aloware_response: aloware.body as never,
-      aloware_error: aloware.ok ? null : `HTTP ${aloware.status}`,
+      aloware_error: alowareErrorText,
     });
 
   if (insertError) {
@@ -126,6 +257,16 @@ export async function POST(request: Request) {
     return NextResponse.json(
       { error: "Could not save your signup. Please try again." },
       { status: 500 }
+    );
+  }
+
+  if (alowareHandling.kind === "warning") {
+    return NextResponse.json(
+      {
+        success: true,
+        warning: alowareHandling.warning,
+      },
+      { status: 202 }
     );
   }
 

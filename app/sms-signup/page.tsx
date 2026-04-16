@@ -27,6 +27,7 @@ export default function SmsSignupPage() {
   const [errors, setErrors] = useState<FieldErrors>({});
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [submissionWarning, setSubmissionWarning] = useState<string | null>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -62,6 +63,7 @@ export default function SmsSignupPage() {
     }
 
     setErrors({});
+    setSubmissionWarning(null);
     setSubmitting(true);
     try {
       const res = await fetch("/api/sms-signup", {
@@ -76,9 +78,9 @@ export default function SmsSignupPage() {
           termsConsent,
         }),
       });
+      const data = await res.json().catch(() => ({}));
 
       if (!res.ok) {
-        const data = await res.json().catch(() => ({}));
         if (data?.details) {
           const fieldErrors: FieldErrors = {};
           for (const [key, messages] of Object.entries(
@@ -95,6 +97,9 @@ export default function SmsSignupPage() {
         return;
       }
 
+      setSubmissionWarning(
+        typeof data?.warning === "string" ? data.warning : null
+      );
       setSubmitted(true);
     } catch {
       setErrors({
@@ -131,6 +136,11 @@ export default function SmsSignupPage() {
             Thank you for signing up. You will receive SMS notifications at the
             number provided. Reply STOP at any time to unsubscribe.
           </p>
+          {submissionWarning && (
+            <div className="mb-6 rounded-lg border border-amber-300 bg-amber-50 px-4 py-3 text-sm text-amber-800">
+              {submissionWarning}
+            </div>
+          )}
           <Link
             href="/"
             className="inline-block px-6 py-3 bg-orange-500 hover:bg-orange-600 text-white font-semibold rounded-lg transition-colors"
@@ -393,7 +403,7 @@ export default function SmsSignupPage() {
               disabled={submitting}
               className="w-full py-3.5 bg-orange-500 hover:bg-orange-600 disabled:bg-orange-300 disabled:cursor-not-allowed text-white font-bold rounded-lg shadow-md hover:shadow-lg transition-all duration-200 text-lg"
             >
-              {submitting ? "Signing Up…" : "Sign Up"}
+              {submitting ? "Signing Up..." : "Sign Up"}
             </button>
           </form>
         </div>

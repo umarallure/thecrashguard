@@ -48,6 +48,7 @@ export async function createAlowareContact(
     phone_number: input.phone_number,
     lead_source: input.lead_source ?? "Website SMS Opt-In",
     notes: input.notes,
+    force_update: true,
   };
 
   if (process.env.ALOWARE_TAG_ID) payload.tag_id = process.env.ALOWARE_TAG_ID;
@@ -57,14 +58,28 @@ export async function createAlowareContact(
     payload.distribute_to_ring_group = true;
   }
 
-  const res = await fetch(`${BASE_URL}/webhook/forms`, {
-    method: "POST",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(payload),
-  });
+  let res: Response;
+  try {
+    res = await fetch(`${BASE_URL}/webhook/forms`, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload),
+    });
+  } catch (error) {
+    return {
+      ok: false,
+      status: 0,
+      body: {
+        error:
+          error instanceof Error
+            ? error.message
+            : "Could not reach Aloware",
+      },
+    };
+  }
 
   let body: unknown;
   try {
