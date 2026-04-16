@@ -23,11 +23,12 @@ NEXT_PUBLIC_GA_ID=G-XXXXX
 ```
 3. Run Next dev server
 ```powershell
-npm run dev:next
+npm run dev
 ```
 
 Notes:
-- This migration is incremental — the Vite app remains intact. You can keep using the Vite dev server with `npm run dev` while adding Next pages.
+- Next.js is now the default dev/build target via `npm run dev` and `npm run build`.
+- The legacy Vite entry remains available only for migration work via `npm run dev:vite` and `npm run build:vite`.
 - The `src` directory still contains many `react-router-dom` usages; you can remove or refactor them as you convert features to Next.
 - The browser routing and Link behavior will differ from Vite. Make sure to test form submissions and Typeform redirects.
 

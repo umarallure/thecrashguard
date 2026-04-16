@@ -102,6 +102,7 @@
 
 "use client";
 import React, { useState } from "react";
+import Link from "next/link";
 import { Menu, X } from "lucide-react";
 
 export default function ModernNavbar() {
@@ -113,35 +114,37 @@ export default function ModernNavbar() {
         <div className="flex items-center justify-between">
           {/* Logo */}
           <div className="flex items-center gap-1 sm:gap-2">
-            <div className="flex-shrink-0">
-              <img
-                src="/logo3.png"
-                alt="Logo"
-                className="h-12 w-auto sm:h-14 md:h-16 lg:h-20"
-              />
-            </div>
-            <span className="font-bold text-lg sm:text-xl md:text-2xl text-orange-500 whitespace-nowrap">
-              Accident Payments
-            </span>
+            <Link href="/" className="flex items-center gap-1 sm:gap-2">
+              <div className="flex-shrink-0">
+                <img
+                  src="/logo3.png"
+                  alt="Logo"
+                  className="h-12 w-auto sm:h-14 md:h-16 lg:h-20"
+                />
+              </div>
+              <span className="font-bold text-lg sm:text-xl md:text-2xl text-orange-500 whitespace-nowrap">
+                Accident Payments
+              </span>
+            </Link>
           </div>
 
           {/* Desktop Menu */}
           <div className="hidden md:flex items-center gap-4 lg:gap-8">
             {/* Resources Link */}
-            <a
+            <Link
               href="/resources"
               className="text-gray-700 hover:text-orange-500 font-medium transition-colors duration-200 text-sm lg:text-base"
             >
               Resources
-            </a>
+            </Link>
 
             {/* CTA Button */}
-            <a
+            <Link
               href="/case-review"
               className="px-4 lg:px-6 py-2 lg:py-3 bg-orange-500 hover:bg-orange-600 text-white font-semibold rounded-lg shadow-md hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-200 text-sm lg:text-base whitespace-nowrap"
             >
               Get Free Case Review
-            </a>
+            </Link>
           </div>
 
           {/* Mobile Menu Button */}
@@ -163,22 +166,22 @@ export default function ModernNavbar() {
           <div className="md:hidden mt-4 pb-4 border-t border-gray-100 pt-4 animate-slideDown">
             <div className="flex flex-col gap-4">
               {/* Resources Link */}
-              <a
+              <Link
                 href="/resources"
                 className="text-gray-700 hover:text-orange-500 font-medium transition-colors duration-200 px-2"
                 onClick={() => setIsMenuOpen(false)}
               >
                 Resources
-              </a>
+              </Link>
 
               {/* CTA Button */}
-              <a
+              <Link
                 href="/case-review"
                 className="w-full text-center px-6 py-3 bg-orange-500 hover:bg-orange-600 text-white font-semibold rounded-lg shadow-md transition-colors duration-200"
                 onClick={() => setIsMenuOpen(false)}
               >
                 Get Free Case Review
-              </a>
+              </Link>
             </div>
           </div>
         )}

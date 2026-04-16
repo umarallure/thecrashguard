@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, type ReactNode } from 'react';
 import Link from 'next/link';
 import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -23,7 +23,7 @@ import { BlogPost, TableOfContentsItem } from '@/lib/blog';
 
 interface BlogPostContentProps {
   post: BlogPost;
-  compiledContent: any;
+  compiledContent: ReactNode;
   toc: TableOfContentsItem[];
   relatedPosts: BlogPost[];
 }

@@ -2,17 +2,20 @@
   Shim for `next/navigation` to make Vite dev possible by mapping Next Navigation hooks to react-router-dom
   This file is used only in Vite dev via alias in vite.config.ts.
 */
-import { useNavigate, useLocation, useParams } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
+
+interface RouterOptions {
+  replace?: boolean;
+}
 
 export function useRouter() {
   const navigate = useNavigate();
-  // simple object mimicking Next router push/replace
+
   return {
-    push: (url: string, options?: { replace?: boolean }) => {
-      if (options?.replace) navigate(url, { replace: true } as any);
-      else navigate(url as any);
+    push: (url: string, options?: RouterOptions) => {
+      navigate(url, { replace: Boolean(options?.replace) });
     },
-    replace: (url: string) => navigate(url as any, { replace: true } as any),
+    replace: (url: string) => navigate(url, { replace: true }),
   };
 }
 

@@ -1,9 +1,16 @@
 import Link from "next/link";
+import {
+  COMPANY_NAME,
+  PRIVACY_POLICY_UPDATED_LABEL,
+  SMS_PROGRAM_MESSAGE_TYPES,
+  WEBSITE_HOSTNAME,
+  WEBSITE_URL,
+} from "@/lib/sms-compliance";
 
 export const metadata = {
   title: "Privacy Policy | Accident Payments",
   description:
-    "Learn how Accident Payments collects, uses, and protects your personal information including SMS and phone data.",
+    "Learn how Accident Payments collects, uses, shares, and protects personal information, including SMS consent and mobile data.",
 };
 
 export default function PrivacyPolicyPage() {
@@ -13,9 +20,7 @@ export default function PrivacyPolicyPage() {
       <div className="bg-gradient-to-r from-orange-500 to-orange-600 text-white py-16 px-4">
         <div className="max-w-4xl mx-auto text-center">
           <h1 className="text-4xl font-bold mb-4">Privacy Policy</h1>
-          <p className="text-orange-100">
-            Last updated: March 27, 2026
-          </p>
+          <p className="text-orange-100">Last updated: {PRIVACY_POLICY_UPDATED_LABEL}</p>
         </div>
       </div>
 
@@ -28,11 +33,11 @@ export default function PrivacyPolicyPage() {
               Introduction
             </h2>
             <p className="text-gray-700 leading-relaxed">
-              Accident Payments (&quot;we,&quot; &quot;us,&quot; or &quot;our&quot;) operates the website{" "}
-              <strong>accidentpayments.com</strong>. This Privacy Policy explains
+              {COMPANY_NAME} (&quot;we,&quot; &quot;us,&quot; or &quot;our&quot;) operates the
+              website <strong>{WEBSITE_HOSTNAME}</strong>. This Privacy Policy explains
               how we collect, use, disclose, and safeguard your information when
-              you visit our website or use our services, including any SMS or text
-              messaging services.
+              you visit our website, request services from us, or opt in to receive
+              SMS or other communications from us.
             </p>
           </section>
 
@@ -47,9 +52,9 @@ export default function PrivacyPolicyPage() {
             </p>
             <ul className="list-disc pl-6 text-gray-700 space-y-2">
               <li>Fill out a contact form or case review form on our website</li>
-              <li>Sign up for SMS text message notifications</li>
+              <li>Provide a mobile number and opt in to receive SMS messages</li>
               <li>Subscribe to our communications</li>
-              <li>Contact us directly via email, phone, or other means</li>
+              <li>Communicate with us through our website or by text message</li>
             </ul>
             <p className="text-gray-700 leading-relaxed mt-4">
               The types of personal information we may collect include:
@@ -64,8 +69,9 @@ export default function PrivacyPolicyPage() {
                 including accident type, location, and description
               </li>
               <li>
-                <strong>SMS Consent Records:</strong> Records of your consent to
-                receive text messages, including timestamps and consent type
+                <strong>SMS Consent and Preference Data:</strong> Records of your
+                consent to receive text messages, including checkbox selections,
+                timestamps, policy versions, IP address, page URL, and user agent
               </li>
               <li>
                 <strong>Usage Data:</strong> Information about how you interact with
@@ -85,12 +91,19 @@ export default function PrivacyPolicyPage() {
             </p>
             <ul className="list-disc pl-6 text-gray-700 space-y-2">
               <li>To respond to your inquiries and provide case review services</li>
-              <li>To connect you with qualified attorneys in our network</li>
               <li>
-                To send SMS text messages you have opted in to receive, including
-                appointment reminders, case updates, and notifications
+                To review your request and, when appropriate and requested by you,
+                help facilitate contact with an independent attorney or law firm
+              </li>
+              <li>
+                To send SMS messages you have specifically opted in to receive,
+                including {SMS_PROGRAM_MESSAGE_TYPES}
               </li>
               <li>To improve our website, services, and user experience</li>
+              <li>
+                To maintain consent records and satisfy legal, carrier, and
+                compliance requirements
+              </li>
               <li>To comply with legal obligations</li>
             </ul>
           </section>
@@ -101,28 +114,29 @@ export default function PrivacyPolicyPage() {
               SMS/Text Messaging Policy
             </h2>
             <p className="text-gray-700 leading-relaxed mb-4">
-              If you opt in to receive SMS text messages from Accident Payments:
+              If you opt in to receive SMS text messages from {COMPANY_NAME}:
             </p>
             <ul className="list-disc pl-6 text-gray-700 space-y-2">
               <li>
-                Message frequency varies based on your interactions and case status
+                Message types may include {SMS_PROGRAM_MESSAGE_TYPES}
               </li>
+              <li>Message frequency varies</li>
               <li>Message and data rates may apply</li>
               <li>
                 You may opt out at any time by replying <strong>STOP</strong> to any
                 text message
               </li>
               <li>
-                Reply <strong>HELP</strong> to any text message for support
-                information
+                Reply <strong>HELP</strong> to any text message for support, or use
+                the contact options available on our website
               </li>
               <li>Consent to receive SMS is not a condition of purchase or service</li>
             </ul>
             <p className="text-gray-700 leading-relaxed mt-4">
-              We collect and use your mobile phone number solely for the purpose of
-              sending the SMS messages you have consented to receive. Your phone
-              number will not be shared with third parties for their marketing
-              purposes.
+              Submitting a case review or contact request does not, by itself,
+              enroll you in SMS. We send text messages only after you provide your
+              mobile number and affirmatively check the SMS consent box displayed
+              with the required disclosures.
             </p>
           </section>
 
@@ -132,7 +146,9 @@ export default function PrivacyPolicyPage() {
               Data Sharing and Third Parties
             </h2>
             <p className="text-gray-700 leading-relaxed font-semibold bg-blue-50 border-l-4 border-blue-500 p-4 rounded-r-lg mb-4">
-              We do not share your data with third parties for marketing purposes.
+              We do not share, sell, rent, or trade your personal information,
+              including mobile numbers or SMS opt-in data, with third parties or
+              affiliates for their marketing or promotional purposes.
             </p>
             <p className="text-gray-700 leading-relaxed mb-4">
               We may share your information only in the following limited
@@ -140,15 +156,15 @@ export default function PrivacyPolicyPage() {
             </p>
             <ul className="list-disc pl-6 text-gray-700 space-y-2">
               <li>
-                <strong>Attorney Referrals:</strong> With qualified attorneys in our
-                network for the sole purpose of evaluating and assisting with your
-                legal matter, only when you have requested a case review
+                <strong>Requested Service Fulfillment:</strong> With an independent
+                attorney or law firm only when you have asked us to help facilitate
+                a case review or similar requested service
               </li>
               <li>
                 <strong>Service Providers:</strong> With trusted service providers
                 who assist in operating our website and services (such as hosting,
-                analytics, and form processing), bound by confidentiality
-                obligations
+                analytics, form processing, and messaging delivery), each bound by
+                appropriate confidentiality and data-protection obligations
               </li>
               <li>
                 <strong>Legal Requirements:</strong> When required by law, court
@@ -156,8 +172,9 @@ export default function PrivacyPolicyPage() {
               </li>
             </ul>
             <p className="text-gray-700 leading-relaxed mt-4">
-              We do not sell, rent, or trade your personal information to any third
-              party.
+              Text messaging originator opt-in data and consent will not be shared
+              with any third parties except vendors, platforms, and carriers that
+              help us deliver the messaging services you requested.
             </p>
           </section>
 
@@ -199,8 +216,8 @@ export default function PrivacyPolicyPage() {
               We retain your personal information only for as long as necessary to
               fulfill the purposes described in this Privacy Policy, or as required
               by law. SMS consent records are retained for the duration of your
-              subscription and for a reasonable period after you opt out, as
-              required for compliance purposes.
+              subscription and for a reasonable period after you opt out, as needed
+              for legal, carrier, and compliance purposes.
             </p>
           </section>
 
@@ -217,7 +234,10 @@ export default function PrivacyPolicyPage() {
               <li>The right to access the personal information we hold about you</li>
               <li>The right to request correction of inaccurate information</li>
               <li>The right to request deletion of your personal information</li>
-              <li>The right to opt out of SMS communications at any time by replying STOP</li>
+              <li>
+                The right to opt out of SMS communications at any time by replying
+                STOP
+              </li>
               <li>The right to withdraw consent for data processing</li>
             </ul>
             <p className="text-gray-700 leading-relaxed mt-4">
@@ -263,16 +283,20 @@ export default function PrivacyPolicyPage() {
             </p>
             <div className="mt-4 bg-gray-50 rounded-lg p-6">
               <p className="text-gray-900 font-semibold text-lg">
-                Accident Payments
+                {COMPANY_NAME}
               </p>
               <p className="text-gray-700 mt-2">
                 Website:{" "}
                 <a
-                  href="https://www.accidentpayments.com"
+                  href={WEBSITE_URL}
                   className="text-orange-500 hover:text-orange-600"
                 >
-                  www.accidentpayments.com
+                  {WEBSITE_HOSTNAME}
                 </a>
+              </p>
+              <p className="text-gray-700 mt-2">
+                SMS Support: Reply <strong>HELP</strong> to any message sent through
+                our SMS program.
               </p>
             </div>
           </section>

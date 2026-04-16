@@ -1,9 +1,16 @@
 import Link from "next/link";
+import {
+  COMPANY_NAME,
+  SMS_PROGRAM_MESSAGE_TYPES,
+  TERMS_UPDATED_LABEL,
+  WEBSITE_HOSTNAME,
+  WEBSITE_URL,
+} from "@/lib/sms-compliance";
 
 export const metadata = {
   title: "Terms and Conditions | Accident Payments",
   description:
-    "Terms and Conditions for using Accident Payments website and services, including SMS messaging terms.",
+    "Terms and Conditions for using Accident Payments website and services, including SMS messaging terms and support instructions.",
 };
 
 export default function TermsPage() {
@@ -13,9 +20,7 @@ export default function TermsPage() {
       <div className="bg-gradient-to-r from-orange-500 to-orange-600 text-white py-16 px-4">
         <div className="max-w-4xl mx-auto text-center">
           <h1 className="text-4xl font-bold mb-4">Terms and Conditions</h1>
-          <p className="text-orange-100">
-            Last updated: March 27, 2026
-          </p>
+          <p className="text-orange-100">Last updated: {TERMS_UPDATED_LABEL}</p>
         </div>
       </div>
 
@@ -29,10 +34,10 @@ export default function TermsPage() {
             </h2>
             <p className="text-gray-700 leading-relaxed">
               By accessing or using the website{" "}
-              <strong>accidentpayments.com</strong> (&quot;the Site&quot;) operated by
-              Accident Payments (&quot;we,&quot; &quot;us,&quot; or &quot;our&quot;), you agree to be bound
-              by these Terms and Conditions. If you do not agree with any part of
-              these terms, you must not use the Site or our services.
+              <strong>{WEBSITE_HOSTNAME}</strong> (&quot;the Site&quot;) operated by{" "}
+              {COMPANY_NAME} (&quot;we,&quot; &quot;us,&quot; or &quot;our&quot;), you agree to be
+              bound by these Terms and Conditions. If you do not agree with any part
+              of these terms, you must not use the Site or our services.
             </p>
           </section>
 
@@ -42,16 +47,17 @@ export default function TermsPage() {
               Description of Services
             </h2>
             <p className="text-gray-700 leading-relaxed">
-              Accident Payments is a legal referral and information platform. We
-              provide educational resources related to personal injury, car
-              accidents, medical malpractice, workers&apos; compensation, SSDI
-              benefits, and other legal matters. We also offer free case review
-              services to help connect individuals with qualified attorneys.
+              {COMPANY_NAME} is an information and case-intake platform. We provide
+              educational resources related to personal injury, car accidents,
+              medical malpractice, workers&apos; compensation, SSDI benefits, and
+              other legal matters. If you request a case review, we may help
+              facilitate contact with an independent attorney or law firm that may
+              be able to evaluate your matter.
             </p>
             <div className="bg-amber-50 border-l-4 border-amber-500 p-4 rounded-r-lg mt-4">
               <p className="text-gray-800 font-semibold">Important Disclaimer:</p>
               <p className="text-gray-700 mt-1">
-                Accident Payments is <strong>not a law firm</strong> and does not
+                {COMPANY_NAME} is <strong>not a law firm</strong> and does not
                 provide legal advice. The information on this website is for general
                 educational purposes only and should not be construed as legal
                 advice. No attorney-client relationship is formed by using this
@@ -94,20 +100,16 @@ export default function TermsPage() {
               SMS/Text Messaging Terms
             </h2>
             <p className="text-gray-700 leading-relaxed mb-4">
-              By opting in to receive SMS text messages from Accident Payments, you
-              agree to the following terms:
+              By opting in to receive SMS text messages from {COMPANY_NAME}, you
+              agree to the following messaging terms:
             </p>
             <ul className="list-disc pl-6 text-gray-700 space-y-2">
               <li>
-                You consent to receive text messages from Accident Payments at the
+                You consent to receive text messages from {COMPANY_NAME} at the
                 mobile phone number you provided, including messages sent via
-                automated technology
+                automated technology where permitted by law
               </li>
-              <li>
-                Message types may include appointment reminders, case updates,
-                notifications, billing or account updates, and marketing messages
-                (if separately consented to)
-              </li>
+              <li>Message types may include {SMS_PROGRAM_MESSAGE_TYPES}</li>
               <li>Message frequency varies</li>
               <li>Message and data rates may apply</li>
               <li>
@@ -116,18 +118,28 @@ export default function TermsPage() {
               </li>
               <li>
                 You may opt out at any time by replying <strong>STOP</strong> to any
-                message
+                message we send
               </li>
               <li>
                 For assistance, reply <strong>HELP</strong> to any message or
-                contact us through our website
+                visit{" "}
+                <a
+                  href={WEBSITE_URL}
+                  className="text-orange-500 hover:text-orange-600 underline"
+                >
+                  {WEBSITE_HOSTNAME}
+                </a>
+              </li>
+              <li>
+                We send SMS only after you separately consent through a form that
+                clearly discloses the program terms
               </li>
             </ul>
             <p className="text-gray-700 leading-relaxed mt-4">
-              By providing your phone number and checking the SMS consent checkbox
-              on our forms, you expressly consent to receive the specified types of
-              text messages. You are responsible for any message and data rates
-              charged by your mobile carrier.
+              Your SMS consent applies only to messages from {COMPANY_NAME}; it does
+              not authorize unrelated third-party marketing texts. You understand
+              that wireless carriers are not liable for delayed or undelivered
+              messages.
             </p>
           </section>
 
@@ -138,11 +150,13 @@ export default function TermsPage() {
             </h2>
             <p className="text-gray-700 leading-relaxed">
               When you submit a case review request, your information may be shared
-              with qualified attorneys in our network for the purpose of evaluating
+              with an independent attorney or law firm for the purpose of evaluating
               your legal matter. Submitting a case review does not guarantee
               representation by any attorney. Any attorney-client relationship is
               formed directly between you and the attorney, subject to their own
-              terms and agreements.
+              terms and agreements. Submitting a case review does not automatically
+              enroll you in SMS messaging; text messaging requires separate opt-in
+              consent.
             </p>
           </section>
 
@@ -256,16 +270,20 @@ export default function TermsPage() {
             </p>
             <div className="mt-4 bg-gray-50 rounded-lg p-6">
               <p className="text-gray-900 font-semibold text-lg">
-                Accident Payments
+                {COMPANY_NAME}
               </p>
               <p className="text-gray-700 mt-2">
                 Website:{" "}
                 <a
-                  href="https://www.accidentpayments.com"
+                  href={WEBSITE_URL}
                   className="text-orange-500 hover:text-orange-600"
                 >
-                  www.accidentpayments.com
+                  {WEBSITE_HOSTNAME}
                 </a>
+              </p>
+              <p className="text-gray-700 mt-2">
+                SMS Help: Reply <strong>HELP</strong> to any text message from our
+                SMS program.
               </p>
             </div>
           </section>

@@ -13,6 +13,8 @@ out/
 build/
 dist/
 
+.github
+
 # Vite
 dist-ssr
 *.local
