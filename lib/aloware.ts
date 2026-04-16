@@ -2,8 +2,7 @@
 // NEXT_PUBLIC_ prefix, so Next.js will refuse to bundle it into client
 // output — that is the actual secret guard.
 
-const BASE_URL =
-  process.env.ALOWARE_API_BASE_URL || "https://app.aloware.io/api/v1";
+const BASE_URL = "https://app.aloware.io/api/v1";
 
 export type AlowareContactInput = {
   first_name: string;
