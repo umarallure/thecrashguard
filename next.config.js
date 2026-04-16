@@ -3,10 +3,17 @@ import remarkGfm from 'remark-gfm';
 import rehypeSlug from 'rehype-slug';
 import rehypeAutolinkHeadings from 'rehype-autolink-headings';
 
+const supabaseUrl = process.env.VITE_SUPABASE_URL || '';
+const supabasePublishableKey = process.env.VITE_SUPABASE_ANON_KEY || '';
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
   pageExtensions: ['js', 'jsx', 'md', 'mdx', 'ts', 'tsx'],
+  env: {
+    VITE_SUPABASE_URL: supabaseUrl,
+    VITE_SUPABASE_ANON_KEY: supabasePublishableKey,
+  },
   images: {
     domains: ['cdn.prod.website-files.com', 'images.unsplash.com'],
   },

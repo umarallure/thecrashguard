@@ -247,6 +247,6 @@ export function generateLocalBusinessSchema(
 }
 
 // Helper to inject schema into page
-export function injectSchema(schema: any): string {
+export function injectSchema(schema: unknown): string {
   return JSON.stringify(schema);
 }
