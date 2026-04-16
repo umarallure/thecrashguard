@@ -1,6 +1,5 @@
-// Server-only Aloware client. Imports ALOWARE_API_TOKEN which has no
-// NEXT_PUBLIC_ prefix, so Next.js will refuse to bundle it into client
-// output — that is the actual secret guard.
+// Server-only Aloware client. Reads only non-public env vars, so Next.js
+// will refuse to bundle them into client output.
 
 const BASE_URL = "https://app.aloware.io/api/v1";
 
@@ -28,12 +27,15 @@ export type AlowareResult = {
 export async function createAlowareContact(
   input: AlowareContactInput
 ): Promise<AlowareResult> {
-  const token = process.env.ALOWARE_API_TOKEN;
+  const token =
+    process.env.ALOWARE_API_TOKEN || process.env.VITE_ALOWARE_API_TOKEN;
   if (!token) {
     return {
       ok: false,
       status: 0,
-      body: { error: "ALOWARE_API_TOKEN not configured" },
+      body: {
+        error: "ALOWARE_API_TOKEN or VITE_ALOWARE_API_TOKEN not configured",
+      },
     };
   }
 
