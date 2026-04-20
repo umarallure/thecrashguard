@@ -84,7 +84,7 @@ const mapAlowareFieldMessage = (
   const lower = message.toLowerCase();
 
   if (field === "phone") {
-    if (lower.includes("required")) return "Mobile phone is required for SMS";
+    if (lower.includes("required")) return "Enter a valid mobile phone number";
     if (lower.includes("invalid") || lower.includes("empty"))
       return "Enter a valid mobile phone number";
   }
@@ -176,11 +176,9 @@ export async function POST(request: Request) {
   const { firstName, lastName, email, phone, smsConsent, termsConsent } =
     parsed.data;
 
-  const normalizedPhone = phone ? normalizePhone(phone) : "";
-  // Phone is not asterisked on the form per A2P 10DLC guidance, but
-  // functionally a user can't receive SMS without one. Reject submissions
-  // that lack a usable phone number with a clear message.
-  if (!normalizedPhone || normalizedPhone.replace(/\D+/g, "").length < 11) {
+  const phoneDigits = phone.replace(/\D+/g, "");
+  const normalizedPhone = phoneDigits ? normalizePhone(phone) : "";
+  if (phoneDigits && (phoneDigits.length < 10 || phoneDigits.length > 11)) {
     return NextResponse.json(
       {
         error: "Validation failed",
@@ -198,19 +196,24 @@ export async function POST(request: Request) {
   const userAgent = headers.get("user-agent") || null;
   const pageUrl = headers.get("referer") || null;
 
-  // 1. Forward to Aloware first. We record the outcome in the same insert
-  //    below so the audit row always reflects what actually happened.
-  const aloware = await createAlowareContact({
-    first_name: firstName,
-    last_name: lastName,
-    email,
-    phone_number: normalizedPhone,
-    lead_source: "Website SMS Opt-In",
-    notes: `Consent captured ${new Date().toISOString()} from ${pageUrl ?? "unknown page"}`,
-  });
-  const alowareHandling = classifyAlowareResult(aloware);
+  // 1. Forward to Aloware only when a phone number is present. We record the
+  //    outcome in the same insert below so the audit row reflects what happened.
+  let aloware: AlowareResult | null = null;
+  let alowareHandling: AlowareHandling = { kind: "success" };
 
-  if (!aloware.ok) {
+  if (normalizedPhone) {
+    aloware = await createAlowareContact({
+      first_name: firstName,
+      last_name: lastName,
+      email,
+      phone_number: normalizedPhone,
+      lead_source: "Website SMS Opt-In",
+      notes: `Consent captured ${new Date().toISOString()} from ${pageUrl ?? "unknown page"}`,
+    });
+    alowareHandling = classifyAlowareResult(aloware);
+  }
+
+  if (aloware && !aloware.ok) {
     console.error("Aloware forwarding failed:", aloware.status, aloware.body);
   }
 
@@ -224,7 +227,7 @@ export async function POST(request: Request) {
     );
   }
 
-  const alowareErrorText = aloware.ok
+  const alowareErrorText = !aloware || aloware.ok
     ? null
     : getAlowareMessage(aloware.body) ?? `HTTP ${aloware.status}`;
 
@@ -237,7 +240,7 @@ export async function POST(request: Request) {
       first_name: firstName,
       last_name: lastName,
       email,
-      phone: normalizedPhone,
+      phone: normalizedPhone || null,
       sms_consent: smsConsent,
       terms_consent: termsConsent,
       checkbox_sms_text: CHECKBOX_SMS_TEXT,
@@ -247,8 +250,8 @@ export async function POST(request: Request) {
       ip_address: ip,
       user_agent: userAgent,
       page_url: pageUrl,
-      aloware_forwarded: aloware.ok,
-      aloware_response: aloware.body as never,
+      aloware_forwarded: aloware?.ok ?? false,
+      aloware_response: aloware ? (aloware.body as never) : null,
       aloware_error: alowareErrorText,
     });
 
