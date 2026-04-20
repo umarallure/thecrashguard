@@ -45,8 +45,7 @@ export default function SmsSignupPage() {
     else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email))
       next.email = "Enter a valid email address";
     const digits = formData.phone.replace(/\D+/g, "");
-    if (!digits) next.phone = "Mobile phone is required for SMS";
-    else if (digits.length < 10 || digits.length > 11)
+    if (digits && (digits.length < 10 || digits.length > 11))
       next.phone = "Enter a valid US mobile phone number";
     if (!smsConsent) next.smsConsent = "You must agree to receive SMS messages";
     if (!termsConsent)
@@ -111,6 +110,8 @@ export default function SmsSignupPage() {
   };
 
   if (submitted) {
+    const submittedWithPhone = formData.phone.replace(/\D+/g, "").length > 0;
+
     return (
       <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-orange-50 flex items-center justify-center px-4">
         <div className="max-w-md w-full bg-white rounded-2xl shadow-xl p-8 text-center">
@@ -133,8 +134,9 @@ export default function SmsSignupPage() {
             You&apos;re Signed Up!
           </h2>
           <p className="text-gray-600 mb-6">
-            Thank you for signing up. You will receive SMS notifications at the
-            number provided. Reply STOP at any time to unsubscribe.
+            {submittedWithPhone
+              ? "Thank you for signing up. You will receive SMS notifications at the number provided. Reply STOP at any time to unsubscribe."
+              : "Thank you for signing up. Your preferences have been recorded."}
           </p>
           {submissionWarning && (
             <div className="mb-6 rounded-lg border border-amber-300 bg-amber-50 px-4 py-3 text-sm text-amber-800">
@@ -255,15 +257,14 @@ export default function SmsSignupPage() {
                 )}
               </div>
 
-              {/* Phone field — intentionally NO asterisk per A2P 10DLC guidance
-                  (must not appear as a forced requirement). We still validate
-                  on submit since SMS isn't possible without it. */}
+              {/* Phone field is optional; validate only when a value is provided. */}
               <div>
                 <label
                   htmlFor="phone"
                   className="block text-sm font-semibold text-gray-700 mb-1.5"
                 >
-                  Mobile Phone
+                  Mobile Phone{" "}
+                  <span className="font-normal text-gray-500">(optional)</span>
                 </label>
                 <input
                   type="tel"
@@ -365,14 +366,14 @@ export default function SmsSignupPage() {
 
             <div className="bg-gray-50 rounded-lg p-4 mt-2">
               <p className="text-xs text-gray-500 leading-relaxed">
-                By entering my email and phone number on this form and clicking
-                sign up, I consent to receive calls, emails, and text messages
-                from {COMPANY_NAME}, including messages sent via automation
-                using the contact information provided above. Consent is not a
-                condition of purchase. Message and data rates may apply. Message
-                frequency varies. You may unsubscribe any time by reply STOP via
-                text message or clicking the unsubscribe link via email. Reply
-                HELP anytime for assistance.
+                By entering my email and, if provided, phone number on this form
+                and clicking sign up, I consent to receive calls, emails, and
+                text messages from {COMPANY_NAME}, including messages sent via
+                automation using the contact information provided above. Consent
+                is not a condition of purchase. Message and data rates may
+                apply. Message frequency varies. You may unsubscribe any time by
+                reply STOP via text message or clicking the unsubscribe link via
+                email. Reply HELP anytime for assistance.
               </p>
               <div className="flex gap-4 mt-3">
                 <Link
