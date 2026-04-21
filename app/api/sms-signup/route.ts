@@ -28,9 +28,7 @@ const schema = z.object({
   lastName: z.string().trim().min(1, "Last name is required").max(100),
   email: z.string().trim().toLowerCase().email("Enter a valid email address"),
   phone: z.string().trim().optional().default(""),
-  smsConsent: z.literal(true, {
-    errorMap: () => ({ message: "You must agree to receive SMS messages" }),
-  }),
+  smsConsent: z.boolean().optional().default(false),
   termsConsent: z.literal(true, {
     errorMap: () => ({
       message: "You must accept the Terms and Privacy Policy",
@@ -196,12 +194,13 @@ export async function POST(request: Request) {
   const userAgent = headers.get("user-agent") || null;
   const pageUrl = headers.get("referer") || null;
 
-  // 1. Forward to Aloware only when a phone number is present. We record the
-  //    outcome in the same insert below so the audit row reflects what happened.
+  // 1. Forward to Aloware only when SMS consent and a phone number are present.
+  //    We record the outcome in the same insert below so the audit row reflects
+  //    what happened.
   let aloware: AlowareResult | null = null;
   let alowareHandling: AlowareHandling = { kind: "success" };
 
-  if (normalizedPhone) {
+  if (smsConsent && normalizedPhone) {
     aloware = await createAlowareContact({
       first_name: firstName,
       last_name: lastName,

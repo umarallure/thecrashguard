@@ -10,7 +10,7 @@ import {
 
 type FieldErrors = Partial<
   Record<
-    "firstName" | "lastName" | "email" | "phone" | "smsConsent" | "termsConsent" | "form",
+    "firstName" | "lastName" | "email" | "phone" | "termsConsent" | "form",
     string
   >
 >;
@@ -47,7 +47,6 @@ export default function SmsSignupPage() {
     const digits = formData.phone.replace(/\D+/g, "");
     if (digits && (digits.length < 10 || digits.length > 11))
       next.phone = "Enter a valid US mobile phone number";
-    if (!smsConsent) next.smsConsent = "You must agree to receive SMS messages";
     if (!termsConsent)
       next.termsConsent = "You must accept the Terms and Privacy Policy";
     return next;
@@ -111,6 +110,7 @@ export default function SmsSignupPage() {
 
   if (submitted) {
     const submittedWithPhone = formData.phone.replace(/\D+/g, "").length > 0;
+    const willReceiveSms = submittedWithPhone && smsConsent;
 
     return (
       <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-orange-50 flex items-center justify-center px-4">
@@ -134,7 +134,7 @@ export default function SmsSignupPage() {
             You&apos;re Signed Up!
           </h2>
           <p className="text-gray-600 mb-6">
-            {submittedWithPhone
+            {willReceiveSms
               ? "Thank you for signing up. You will receive SMS notifications at the number provided. Reply STOP at any time to unsubscribe."
               : "Thank you for signing up. Your preferences have been recorded."}
           </p>
@@ -294,13 +294,8 @@ export default function SmsSignupPage() {
                   type="checkbox"
                   id="smsConsent"
                   checked={smsConsent}
-                  onChange={(e) => {
-                    setSmsConsent(e.target.checked);
-                    if (errors.smsConsent)
-                      setErrors((p) => ({ ...p, smsConsent: undefined }));
-                  }}
+                  onChange={(e) => setSmsConsent(e.target.checked)}
                   className="mt-1 h-5 w-5 rounded border-gray-300 text-orange-500 focus:ring-orange-500 cursor-pointer flex-shrink-0"
-                  aria-invalid={!!errors.smsConsent}
                 />
                 <label
                   htmlFor="smsConsent"
@@ -309,11 +304,6 @@ export default function SmsSignupPage() {
                   {CHECKBOX_SMS_TEXT}
                 </label>
               </div>
-              {errors.smsConsent && (
-                <p className="mt-1 ml-8 text-sm text-red-600">
-                  {errors.smsConsent}
-                </p>
-              )}
             </div>
 
             <div>
@@ -366,14 +356,15 @@ export default function SmsSignupPage() {
 
             <div className="bg-gray-50 rounded-lg p-4 mt-2">
               <p className="text-xs text-gray-500 leading-relaxed">
-                By entering my email and, if provided, phone number on this form
-                and clicking sign up, I consent to receive calls, emails, and
-                text messages from {COMPANY_NAME}, including messages sent via
-                automation using the contact information provided above. Consent
-                is not a condition of purchase. Message and data rates may
-                apply. Message frequency varies. You may unsubscribe any time by
-                reply STOP via text message or clicking the unsubscribe link via
-                email. Reply HELP anytime for assistance.
+                By submitting this form, I consent to receive calls and emails
+                from {COMPANY_NAME} using the contact information provided
+                above. If I check the SMS box, I also agree to receive text
+                messages from {COMPANY_NAME}, including messages sent via
+                automation. Consent is not a condition of purchase. Message and
+                data rates may apply. Message frequency varies. You may
+                unsubscribe any time by reply STOP via text message or clicking
+                the unsubscribe link via email. Reply HELP anytime for
+                assistance.
               </p>
               <div className="flex gap-4 mt-3">
                 <Link
